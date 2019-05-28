@@ -21,18 +21,33 @@ class Board < ApplicationRecord
       ", board_id, user_id]).first
   end
 
+  # def self.create_board(p, id)
+  #   Board.find_by_sql(["
+  #     INSERT INTO boards(name, user_id, created_at, updated_at)
+  #     VALUES (:name, :user_id, :created_at, :updated_at);
+  #     , {
+  #       name: p[:name],
+  #       user_id: id,
+  #       created_at: DateTime.now,
+  #       updated_at: DateTime.now
+  #     }
+  #     "])
+  # end
+
   def self.create_board(p, id)
     Board.find_by_sql(["
-      INSERT INTO boards(name, user_id, created_at, updated_at)
+      INSERT INTO boards (name, user_id, created_at, updated_at)
       VALUES (:name, :user_id, :created_at, :updated_at);
-      , {
-        name: p[:name],
-        user_id: id,
-        created_at: DateTime.now,
-        updated_at: DateTime.now
-      }
-      "])
+    ", {
+      name: p[:name],
+      user_id: id,
+      created_at: DateTime.now,
+      updated_at: DateTime.now
+    }])
   end
+  
+
+
 
   def self.update_board(board_id, p)
     Board.find_by_sql(["
